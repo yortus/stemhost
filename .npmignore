@@ -1,0 +1,10 @@
+.vscode/
+scripts/
+src/
+test/
+*.ts
+!*.d.ts
+*.js.map
+*.peg
+*.log
+tsconfig.json

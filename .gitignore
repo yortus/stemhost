@@ -1,0 +1,6 @@
+dist/
+node_modules/
+test/**/*.js
+*.js.map
+*.log
+*.sln

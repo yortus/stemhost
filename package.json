@@ -1,0 +1,43 @@
+{
+  "name": "stem-host",
+  "version": "0.0.1",
+  "description": "STEM host",
+  "readmeFilename": "README.md",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p src && tsc -p test",
+    "clean": "rimraf dist/ && rimraf test/**/*.js && rimraf test/**/*.js.map",
+    "prepublish": "npm run self-ref && npm run build",
+    "test": "node ./scripts/run-unit-tests",
+    "self-ref": "node ./scripts/enable-self-reference"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yortus/stem-host.git"
+  },
+  "bugs": {
+    "url": "http://github.com/yortus/stem-host/issues"
+  },
+  "keywords": [
+  ],
+  "contributors": [
+    {
+      "name": "Troy Gerwien",
+      "email": "yortus@gmail.com",
+      "url": "http://github.com/yortus/"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/yortus/stem-host#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^3.4.31",
+    "@types/mocha": "^2.2.30",
+    "@types/node": "^6.0.37",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "rimraf": "^2.5.2",
+    "typescript": "^2.2.0-dev.20170110"
+  }
+}
