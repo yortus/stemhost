@@ -19,8 +19,7 @@
   "bugs": {
     "url": "http://github.com/yortus/stem-host/issues"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "contributors": [
     {
       "name": "Troy Gerwien",
@@ -30,7 +29,9 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/yortus/stem-host#readme",
-  "dependencies": {},
+  "dependencies": {
+    "glob": "^7.1.1"
+  },
   "devDependencies": {
     "@types/chai": "^3.4.31",
     "@types/mocha": "^2.2.30",
