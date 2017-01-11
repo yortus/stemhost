@@ -12,6 +12,9 @@
     "test": "node ./scripts/run-unit-tests",
     "self-ref": "node ./scripts/enable-self-reference"
   },
+  "bin": {
+    "stem": "bin/stem.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/yortus/stem-host.git"
@@ -30,13 +33,15 @@
   "license": "MIT",
   "homepage": "https://github.com/yortus/stem-host#readme",
   "dependencies": {
-    "glob": "^7.1.1"
+    "glob": "^7.1.1",
+    "semver": "^5.3.0"
   },
   "devDependencies": {
     "@types/chai": "^3.4.31",
     "@types/glob": "^5.0.30",
     "@types/mocha": "^2.2.30",
     "@types/node": "^6.0.37",
+    "@types/semver": "^5.3.30",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "rimraf": "^2.5.2",
