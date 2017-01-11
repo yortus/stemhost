@@ -1,11 +1,11 @@
-export default Stem;
+export default StemInfo;
 
 
 
 
 
 /** TODO: doc */
-interface Stem {
+interface StemInfo {
 
     /** The name of the STEM. */
     name: string;

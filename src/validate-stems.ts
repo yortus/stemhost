@@ -1,6 +1,6 @@
 import * as semver from 'semver';
 import {logger} from './util';
-import Stem from './stem';
+import StemInfo from './stem-info';
 
 
 
@@ -13,7 +13,7 @@ import Stem from './stem';
 
 
 /** TODO: doc... */
-export default function validateStems(stems: Stem[]) {
+export default function validateStems(stems: StemInfo[]) {
 
     logger.info('Validating STEMs....');
 

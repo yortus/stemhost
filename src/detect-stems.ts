@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import {logger} from './util';
-import Stem from './stem';
+import StemInfo from './stem-info';
 
 
 
@@ -39,7 +39,7 @@ export default function detectStems(appPath: string) {
     // TODO: gather more info...
     let stems = stemPaths.map(stemPath => {
         let pkg = require(path.join(stemPath, 'package.json'));
-        let stem: Stem = {
+        let stem: StemInfo = {
             name: pkg.name,
             version: pkg.version,
             path: stemPath,
