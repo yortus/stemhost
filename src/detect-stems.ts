@@ -1,26 +1,18 @@
 import * as path from 'path';
 import * as glob from 'glob';
-import {logger} from './util';
+import {error} from './util';
 import StemInfo from './stem-info';
 
 
 
 
 
-// TODO: should we really log inside this function? Pass in optional logger?
-
-
-
-
-
-/** Return basic information about all detected STEMs. */
+/**
+ * Searches for STEMs under the given `appPath` and returns metadata about them.
+ * STEMs are sought within the node_modules directory under `appPath` (at any
+ * depth). A node module `mod` is a STEM iff `mod/stem` resolves to a module.
+ */
 export default function detectStems(appPath: string) {
-
-    logger.info('Searching for STEMs....');
-
-// TODO: revise comment
-    // Locate all the STEMs. Each direct subfolder of appPath which
-    // contains a 'structable.json' file is considered to be a STEM.
 
     // TODO: note that this is over-strict, since a file like 'my-module.js' inside node_modules is also a valid module (no dir, no package.json)
     let allModulePaths = glob.sync(path.join(appPath, 'node_modules/**/package.json')).map(fn => fn.slice(0, -12));
@@ -36,22 +28,28 @@ export default function detectStems(appPath: string) {
         }
     });
 
+    // TODO: doc...
+    let stemPackages = stemPaths.map(stemPath => require(path.join(stemPath, 'package.json')));
+    let stemNames = stemPackages.map(pkg => pkg.name);
+
     // TODO: gather more info...
-    let stems = stemPaths.map(stemPath => {
-        let pkg = require(path.join(stemPath, 'package.json'));
-        let stem: StemInfo = {
+    let stems = stemPackages.map((pkg, i) => {
+
+        // NB: STEM dependencies must be in 'dependencies' (i.e. not peer, dev, or optional)
+        let deps = Object.keys(pkg.dependencies || {}).filter(dep => stemNames.indexOf(dep) !== -1);
+        let stem = <StemInfo> {
             name: pkg.name,
             version: pkg.version,
-            path: stemPath,
+            path: stemPaths[i],
             package: pkg,
-            dependencies: Object.keys(pkg.dependencies || {}) // TODO: what about devDeps, optDevs, peerDeps?
+            dependencies: deps
         };
         return stem;
     });
 
     // Exit early if no STEMs found.
     if (stems.length === 0) {
-        logger.error('No STEMs found. The current working directory does not appear to be a structable app.');
+        error(`No STEMs found. The directory ${appPath} does not appear to contain a STEM-based app.`);
     }
 
     // All done. Return the stem list.

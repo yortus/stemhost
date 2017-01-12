@@ -1,23 +1,16 @@
+import * as path from 'path';
 import * as semver from 'semver';
-import {logger} from './util';
+import {error} from './util';
 import StemInfo from './stem-info';
 
 
 
 
 
-// TODO: should we really log inside this function? Pass in optional logger?
+/** Ensure all detected STEMs pass validation checks. */
+export default function validateStems(appPath: string, stems: StemInfo[]) {
 
-
-
-
-
-/** TODO: doc... */
-export default function validateStems(stems: StemInfo[]) {
-
-    logger.info('Validating STEMs....');
-
-    // TODO: Throw if any STEMs have duplicates
+    // Ensure every STEM is a singleton with no duplicates.
     let counts = stems.reduce(
         (counts, stem) => {
             counts[stem.name] = (counts[stem.name] || 0) + 1;
@@ -27,10 +20,18 @@ export default function validateStems(stems: StemInfo[]) {
     );
     let duplicateNames = Object.keys(counts).filter(name => counts[name] > 1);
     if (duplicateNames.length > 0) {
-        logger.error('Duplicate STEM name(s) detected: ' + duplicateNames.join(', '));
+        error(`Duplicate STEM name(s) detected: ${duplicateNames.join(', ')}`);
     }
 
-    // Throw if any dependencies are missing/unreachable or have a required/supplied version mismatch.
+    // Ensure every STEM is found at the top-level within node_modules. This is a conservative
+    // requirement that simplifies subsequent code. It could be relaxed later.
+    stems.forEach(stem => {
+        let actual = path.join(stem.path, 'stem');
+        let expected = path.join(appPath, 'node_modules', stem.name, 'stem');
+        if (actual !== expected) error(`STEM '${stem.name}': must be at the top-level in node_modules, but was found at ${stem.path}.`);
+    });
+
+    // Ensure all STEM-dependencies are resolveable and match the semver requirement of all their dependers.
     stems.forEach(stem => {
         stem.dependencies.forEach(depName => {
 
@@ -39,12 +40,12 @@ export default function validateStems(stems: StemInfo[]) {
 
             // TODO: this *should* additionally check that the dependency can be require()d from the stem's location
             if (!dep) {
-                logger.error("STEM '" + stem.name + "': cannot resolve dependency '" + depName + "'. STEM not found.");
+                error(`STEM '${stem.name}': cannot resolve dependency '${depName}'. STEM not found.`);
                 return; // redundant, but satisfies TypeScript's CFA
             }
 
             if (!semver.satisfies(dep.version, reqVersion)) {
-                logger.error("STEM '" + stem.name + "': cannot resolve dependency '" + depName + "'. Version mismatch (required: " + reqVersion + ", actual: " + dep.version + ").");
+                error(`STEM '${stem.name}': cannot resolve dependency '${depName}'. Version mismatch (required: ${reqVersion}, actual: ${dep.version}).`);
             }
         });
     });

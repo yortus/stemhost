@@ -1,4 +1,4 @@
-import {logger} from './util';
+import {error} from './util';
 import StemInfo from './stem-info';
 
 
@@ -6,9 +6,9 @@ import StemInfo from './stem-info';
 
 
 /**
- *  Return a new array of stems sorted into load order. This is an order which guarantees that each STEM
- *  comes *after* all the STEMs on which it directly or indirectly depends.
- *  Throw an error if a cyclic dependency is detected.
+ * Returns a new array of STEMs sorted into load order. This is an order which
+ * guarantees that each STEM comes *after* all the STEMs on which it directly
+ * or indirectly depends. Throws an error if a cyclic dependency is detected.
  */
 export default function orderStems(stems: StemInfo[]): StemInfo[] {
 
@@ -24,7 +24,7 @@ export default function orderStems(stems: StemInfo[]): StemInfo[] {
 
         if (sorting.indexOf(stem) !== -1) {
             var cycle = sorting.map(p => "'" + p.name + "'").join(', ');
-            logger.error("Cyclic dependencies between stems: " + cycle + ".");
+            error("Cyclic dependencies between stems: " + cycle + ".");
         }
         sorting.push(stem);
         stem.dependencies.forEach(depName => {
