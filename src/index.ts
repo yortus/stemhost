@@ -36,6 +36,10 @@ import {info} from './util';
     catch (err) {
         // Treat as already handled and just exit gracefully. Otherwise we'll have an UnhandledRejectionError
         // TODO: anything else we should do here?
+
+// TODO: need better implementation here. Currently there are two cases:
+// (1) errors that throw via error(), which have already been logged to the console and may be ignored here
+// (2) other errors, which have NOT been logged to the console and should NOT be ignored here
 console.log(err);
         return;
     }
