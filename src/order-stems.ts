@@ -13,7 +13,7 @@ import StemInfo from './stem-info';
 export default function orderStems(stems: StemInfo[]): StemInfo[] {
 
     // TODO: doc...
-    var sorted: StemInfo[] = [];
+    let sorted: StemInfo[] = [];
     stems.forEach(stem => ensureSorted(stem, []));
     return sorted;
 
@@ -23,12 +23,12 @@ export default function orderStems(stems: StemInfo[]): StemInfo[] {
         if (sorted.indexOf(stem) !== -1) return; // already sorted
 
         if (sorting.indexOf(stem) !== -1) {
-            var cycle = sorting.map(p => "'" + p.name + "'").join(', ');
-            error("Cyclic dependencies between stems: " + cycle + ".");
+            let cycle = sorting.map(p => `'${p.name}'`).join(', ');
+            error(`Cyclic dependencies between stems: ${cycle}.`);
         }
         sorting.push(stem);
-        stem.dependencies.forEach(depName => {
-            var depStem = stems.find(stem => stem.name === depName)!;
+        stem.requires.forEach(depName => {
+            let depStem = stems.find(stem => stem.name === depName)!;
             ensureSorted(depStem, sorting);
         });
         sorting.pop();

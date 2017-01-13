@@ -3,6 +3,7 @@ import loadStems from './load-stems';
 import orderStems from './order-stems';
 import reportStems from './report-stems';
 import validateStems from './validate-stems';
+import wrapStems from './wrap-stems';
 import {info} from './util';
 
 
@@ -23,8 +24,11 @@ import {info} from './util';
         stems = orderStems(stems);
         reportStems(stems);
 
+        // TODO: temp testing... augment...
+        info('[Augmenting STEMs]');
+        wrapStems(stems);
 
-        // TODO: temp testing... load...
+        // TODO: temp testing... startup...
         info('[Starting application]');
         await loadStems(stems);
         info('[Application started]');
@@ -32,6 +36,7 @@ import {info} from './util';
     catch (err) {
         // Treat as already handled and just exit gracefully. Otherwise we'll have an UnhandledRejectionError
         // TODO: anything else we should do here?
+console.log(err);
         return;
     }
 })();

@@ -14,7 +14,7 @@ export default function reportStems(stems: StemInfo[]) {
     info('Detected STEMs');
     info('--------------');
     stems.forEach(stem => {
-        var name = (stem.name + '                    ').substr(0, longestStemName);
+        let name = (stem.name + '                    ').substr(0, longestStemName);
         info(`  ${name}   ${stem.version}   ${stem.path}`);
     });
 
@@ -23,18 +23,16 @@ export default function reportStems(stems: StemInfo[]) {
     info('STEM dependencies:   DEPENDER --> DEPENDENCIES');
     info('----------------------------------------------');
     stems.forEach(stem => {
-        var depsOn = stem.dependencies.filter(dep => dep !== stem.name);
-        var name = (stem.name + '                    ').substr(0, longestStemName);
-        var deps = depsOn.length > 0 ? depsOn.join(', ') : '(none)';
+        let name = (stem.name + '                    ').substr(0, longestStemName);
+        let deps = stem.requires.join(', ') || '(none)';
         info(`  ${name} --> ${deps}`);
     });
     info('----------------------------------------------');
     info('STEM dependencies:   DEPENDENCY <-- DEPENDERS');
     info('----------------------------------------------');
     stems.forEach(stem => {
-        var usedBy = stems.filter(st => st !== stem && st.dependencies.indexOf(stem.name) !== -1).map(st => st.name);
-        var name = (stem.name + '                    ').substr(0, longestStemName);
-        var deps = usedBy.length > 0 ? usedBy.join(', ') : '(none)';
+        let name = (stem.name + '                    ').substr(0, longestStemName);
+        let deps = stem.requiredBy.join(', ') || '(none)';
         info(`  ${name} <-- ${deps}`);
     });
 }

@@ -33,7 +33,7 @@ export default function validateStems(appPath: string, stems: StemInfo[]) {
 
     // Ensure all STEM-dependencies are resolveable and match the semver requirement of all their dependers.
     stems.forEach(stem => {
-        stem.dependencies.forEach(depName => {
+        stem.requires.forEach(depName => {
 
             let reqVersion = stem.package.dependencies[depName];
             let dep = stems.find(stem => stem.name === depName);

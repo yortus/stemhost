@@ -36,15 +36,23 @@ export default function detectStems(appPath: string) {
     let stems = stemPackages.map((pkg, i) => {
 
         // NB: STEM dependencies must be in 'dependencies' (i.e. not peer, dev, or optional)
-        let deps = Object.keys(pkg.dependencies || {}).filter(dep => stemNames.indexOf(dep) !== -1);
+        let requires = Object.keys(pkg.dependencies || {}).filter(dep => stemNames.indexOf(dep) !== -1);
+
+        // TODO: ...
         let stem = <StemInfo> {
             name: pkg.name,
             version: pkg.version,
             path: stemPaths[i],
             package: pkg,
-            dependencies: deps
+            requires,
+            requiredBy: null as any
         };
         return stem;
+    });
+
+    // TODO: ...
+    stems.forEach(stem => {
+        stem.requiredBy = stems.filter(p => p.requires.indexOf(stem.name) !== -1).map(p => p.name);
     });
 
     // Exit early if no STEMs found.

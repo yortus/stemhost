@@ -15,16 +15,16 @@ interface StemEntry {
     // TODO: ===== FOR STARTING =====
 
     // TODO: doc...
-    ready?: Promise<boolean>;
+    start?: (importers: StemInfo[]) => void | Promise<void>;
 
     // TODO: doc...
-    decorateExports?: (exports: any, importer: StemInfo) => any;
+    beforeStart?: (importers: StemInfo[]) => void | Promise<void>;
 
     // TODO: doc...
-    beforeStartup?: () => void;
+    afterStart?: (importers: StemInfo[]) => void | Promise<void>;
 
     // TODO: doc...
-    afterStartup?: () => void;
+    decorateExports?: (exports: any, importer: {name: string}) => any;
 
 
 

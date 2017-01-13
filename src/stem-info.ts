@@ -26,5 +26,8 @@ interface StemInfo {
     }
 
     /** The names of all STEMs on which this STEM has declared direct dependencies. */
-    dependencies: string[];
+    requires: string[];
+
+    /** The names of all STEMs which have declared direct dependencies on this STEM. */
+    requiredBy: string[];        
 }
