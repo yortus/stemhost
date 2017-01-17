@@ -3,7 +3,6 @@
 
 
 
-export default function error(message: string): never {
+export default function error(message: string) {
     console.log(`ERROR: ${message}`);
-    throw new Error(message);
 }

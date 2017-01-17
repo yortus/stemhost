@@ -1,7 +1,7 @@
 import * as program from 'commander';
-//import api = require('../api');
+import * as api from '../api';
 import asciiLogo from './asciiLogo';
-import {info} from '../util';
+import {info, error} from '../util';
 
 
 
@@ -42,22 +42,26 @@ if (!ranAction) program.help();
 function makeAction(name: string) {
     let nameUpper = name.toUpperCase();
     let runner = async function (...args: any[]) {
+
         ranAction = true;
-        if (nameUpper === 'START') asciiLogo.split('\n').forEach(line => info(line));
-        // try {
-        //     // Execute the command with the appropriate arguments.
-        //     info('---------- ' + nameUpper + ': STARTING ----------');
-        //     await  api[name].apply(api, args);
-        //     info('---------- ' + nameUpper + ': COMPLETED ----------');
-        // }
-        // catch (err) {
-        //     // If an error occurs, report it and terminate the process.
-        //     error('---------- ' + nameUpper + ': FAILED ----------', true);
-        //     error(err.toString(), true);
-        //     error(err.stack, true);
-        //     process.exit(1);
-        // }
-args//TODO: remove...
+
+        if (name === 'start') {
+            asciiLogo.split('\n').forEach(line => info(line));
+        }
+
+        try {
+            // Execute the command with the appropriate arguments.
+            info('STEM ' + nameUpper + ': STARTING....');
+            await (api as any)[name].apply(api, args);
+            info('STEM ' + nameUpper + ': COMPLETED.');
+        }
+        catch (err) {
+            // If an error occurs, report it and terminate the process.
+            error('STEM ' + nameUpper + ': FAILED.');
+            error(err.toString());
+            error(err.stack);
+            process.exit(1);
+        }
     };
     return runner;
 }

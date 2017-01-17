@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {error} from '../util';
 import StemMain from './stem-main';
 import StemInfo, {StemInfoWithDeps} from './stem-info';
 
@@ -38,7 +37,7 @@ export default function wrapStems(stems: StemInfoWithDeps[]) {
                 var msg = "STEM '" + stem.name + "': refusing to create decorator script for '"
                         + stem.name + "'. Script already exists at '" + scriptPath + "'."
                         + " The script must be manually deleted in order to proceed.";
-                error(msg);
+                throw new Error(msg);
             }
         });
     });

@@ -1,4 +1,3 @@
-import {error} from '../util';
 import {StemInfoWithDeps} from './stem-info';
 
 
@@ -24,7 +23,7 @@ export default function orderStems(stems: StemInfoWithDeps[]): StemInfoWithDeps[
 
         if (sorting.indexOf(stem) !== -1) {
             let cycle = sorting.map(p => `'${p.name}'`).join(', ');
-            error(`Cyclic dependencies between stems: ${cycle}.`);
+            throw new Error(`Cyclic dependencies between stems: ${cycle}.`);
         }
         sorting.push(stem);
         stem.requires.forEach(depName => {

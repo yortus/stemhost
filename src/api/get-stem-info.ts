@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {error} from '../util';
 import StemInfo from './stem-info';
 
 
@@ -21,7 +20,7 @@ export default function getStemInfo(appPath: string, stemName: string) {
     let moduleExists = fs.existsSync(modulePackagePath);
 
     // If neither module nor source exists, then we have an error.
-    if (!sourceExists && !moduleExists) error(`'${stemName}' is not a STEM`);
+    if (!sourceExists && !moduleExists) throw new Error(`'${stemName}' is not a STEM`);
 
     // Load the STEM's package.json file to get additional info about it.
     let pkg = sourceExists ? require(sourcePackagePath) : require(modulePackagePath);

@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as semver from 'semver';
-import {error} from '../util';
 import {StemInfoWithDeps} from './stem-info';
 
 
@@ -15,7 +14,7 @@ export default function validateStems(appPath: string, stems: StemInfoWithDeps[]
     // conservative requirement that simplifies subsequent code. It could be relaxed later.
     let nonTopStems = findNonTopLevelStemModules(appPath);
     if (nonTopStems.length > 0) {
-        error(`STEMs must be installed at the top-level of node_modules. Non-top-level STEMs found at ${nonTopStems}`);
+        throw new Error(`STEMs must be installed at the top-level of node_modules. Non-top-level STEMs found at ${nonTopStems}`);
     }
 
     // Ensure all STEM-dependencies are resolveable and match the semver requirement of all their dependers.
@@ -27,12 +26,11 @@ export default function validateStems(appPath: string, stems: StemInfoWithDeps[]
 
             // TODO: this *should* additionally check that the dependency can be require()d from the stem's location
             if (!dep) {
-                error(`STEM '${stem.name}': cannot resolve dependency '${depName}'. STEM not found.`);
-                return; // redundant, but satisfies TypeScript's CFA
+                throw new Error(`STEM '${stem.name}': cannot resolve dependency '${depName}'. STEM not found.`);
             }
 
             if (!semver.satisfies(dep.version, reqVersion)) {
-                error(`STEM '${stem.name}': cannot resolve dependency '${depName}'. Version mismatch (required: ${reqVersion}, actual: ${dep.version}).`);
+                throw new Error(`STEM '${stem.name}': cannot resolve dependency '${depName}'. Version mismatch (required: ${reqVersion}, actual: ${dep.version}).`);
             }
         });
     });
