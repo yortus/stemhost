@@ -1,12 +1,12 @@
 import {info} from './util';
-import StemInfo from './stem-info';
+import {StemInfoWithDeps} from './stem-info';
 
 
 
 
 
 /** Outputs STEM metadata and dependency relationships. */
-export default function reportStems(stems: StemInfo[]) {
+export default function reportStems(stems: StemInfoWithDeps[]) {
 
     // Log STEM metadata
     let longestStemName = Math.min(stems.reduce((longest, stem) => Math.max(longest, stem.name.length), 0), 20);
@@ -15,7 +15,7 @@ export default function reportStems(stems: StemInfo[]) {
     info('--------------');
     stems.forEach(stem => {
         let name = (stem.name + '                    ').substr(0, longestStemName);
-        info(`  ${name}   ${stem.version}   ${stem.path}`);
+        info(`  ${name}   ${stem.version}   ${stem.modulePath}`);
     });
 
     // Log the dependency graph.
@@ -24,7 +24,7 @@ export default function reportStems(stems: StemInfo[]) {
     info('----------------------------------------------');
     stems.forEach(stem => {
         let name = (stem.name + '                    ').substr(0, longestStemName);
-        let deps = stem.requires.join(', ') || '(none)';
+        let deps = stem.requires!.join(', ') || '(none)';
         info(`  ${name} --> ${deps}`);
     });
     info('----------------------------------------------');
@@ -32,7 +32,7 @@ export default function reportStems(stems: StemInfo[]) {
     info('----------------------------------------------');
     stems.forEach(stem => {
         let name = (stem.name + '                    ').substr(0, longestStemName);
-        let deps = stem.requiredBy.join(', ') || '(none)';
+        let deps = stem.requiredBy!.join(', ') || '(none)';
         info(`  ${name} <-- ${deps}`);
     });
 }

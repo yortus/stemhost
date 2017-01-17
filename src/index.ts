@@ -1,10 +1,12 @@
-import detectStems from './detect-stems';
+import analyseDependencies from './analyse-dependencies';
+import getStemInfo from './get-stem-info';
+import getStemNames from './get-stem-names';
 import loadStems from './load-stems';
 import orderStems from './order-stems';
 import reportStems from './report-stems';
 import validateStems from './validate-stems';
 import wrapStems from './wrap-stems';
-import {info} from './util';
+import {info, error} from './util';
 
 
 
@@ -17,7 +19,15 @@ import {info} from './util';
         // TODO: temp testing... prepare...
         let appPath = process.cwd();
         info('[Searching for STEMs]');
-        let stems = detectStems(appPath);
+        let stemNames = getStemNames(appPath);
+        let stems = analyseDependencies(stemNames.map(name => getStemInfo(appPath, name)));
+
+        // Exit early if no STEMs found.
+        if (stems.length === 0) {
+            error(`No STEMs found. The directory ${appPath} does not appear to contain a STEM-based app.`);
+        }
+
+        // TODO: ...
         info('[Validating STEMs]');
         validateStems(appPath, stems);
         info('[Arranging STEMs]');

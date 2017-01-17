@@ -1,5 +1,5 @@
 import {error} from './util';
-import StemInfo from './stem-info';
+import {StemInfoWithDeps} from './stem-info';
 
 
 
@@ -10,15 +10,15 @@ import StemInfo from './stem-info';
  * guarantees that each STEM comes *after* all the STEMs on which it directly
  * or indirectly depends. Throws an error if a cyclic dependency is detected.
  */
-export default function orderStems(stems: StemInfo[]): StemInfo[] {
+export default function orderStems(stems: StemInfoWithDeps[]): StemInfoWithDeps[] {
 
     // TODO: doc...
-    let sorted: StemInfo[] = [];
+    let sorted: StemInfoWithDeps[] = [];
     stems.forEach(stem => ensureSorted(stem, []));
     return sorted;
 
     // TODO: doc... closure...
-    function ensureSorted(stem: StemInfo, sorting: StemInfo[]) {
+    function ensureSorted(stem: StemInfoWithDeps, sorting: StemInfoWithDeps[]) {
 
         if (sorted.indexOf(stem) !== -1) return; // already sorted
 

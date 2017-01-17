@@ -1,12 +1,12 @@
 import StemInfo from './stem-info';
-export default StemEntry;
+export default StemMain;
 
 
 
 
 
 // TODO: doc...
-interface StemEntry {
+interface StemMain {
 
 
 

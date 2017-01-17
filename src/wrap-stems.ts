@@ -1,25 +1,26 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import {error} from './util';
-import StemEntry from './stem-entry';
-import StemInfo from './stem-info';
+import StemMain from './stem-main';
+import StemInfo, {StemInfoWithDeps} from './stem-info';
 
 
 
 
 
 // TODO: doc...
-export default function wrapStems(stems: StemInfo[]) {
+export default function wrapStems(stems: StemInfoWithDeps[]) {
     stems.forEach(stem => {
-        let entry = require(path.join(stem.path, 'stem')) as StemEntry;
-        let decorateExports = entry.decorateExports;
+
+        let stemMain = require(path.join(stem.modulePath, 'stem')) as StemMain;
+        let decorateExports = stemMain.decorateExports;
         if (!decorateExports) return;
 
         stem.requiredBy.forEach(reqdBy => {
             let importer = stems.find(stem => stem.name === reqdBy)!;
 
             // Ensure the importer STEM has a node_modules directory.
-            let nodeModulesPath = path.join(importer.path, 'node_modules');
+            let nodeModulesPath = path.join(importer.modulePath, 'node_modules');
             if (!fs.existsSync(nodeModulesPath)) fs.mkdirSync(nodeModulesPath);
 
             // Generate the exact text for the decorator script.
