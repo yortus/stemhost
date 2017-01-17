@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import * as semver from 'semver';
-import {StemInfoWithDeps} from './stem-info';
+import {StemInfoWithDeps} from '../stem-info';
 
 
 

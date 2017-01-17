@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import StemInfo from './stem-info';
+import StemInfo from '../stem-info';
 
 
 

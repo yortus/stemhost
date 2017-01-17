@@ -1,5 +1,5 @@
-import {info} from '../util';
-import {StemInfoWithDeps} from './stem-info';
+import {info} from '../../util';
+import {StemInfoWithDeps} from '../stem-info';
 
 
 

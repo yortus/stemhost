@@ -17,6 +17,11 @@ program
     .description('STEM command line interface.')
 
 program
+    .command('list')
+    .description('List all STEMs comprising the application.')
+    .action(makeAction('list'));
+
+program
     .command('start')
     .description('Run the application by loading all STEMs.')
     .action(makeAction('start'));
@@ -51,13 +56,11 @@ function makeAction(name: string) {
 
         try {
             // Execute the command with the appropriate arguments.
-            info('STEM ' + nameUpper + ': STARTING....');
             await (api as any)[name].apply(api, args);
-            info('STEM ' + nameUpper + ': COMPLETED.');
         }
         catch (err) {
             // If an error occurs, report it and terminate the process.
-            error('STEM ' + nameUpper + ': FAILED.');
+            error(`'STEM ${nameUpper}' COMMAND FAILED.`);
             error(err.toString());
             error(err.stack);
             process.exit(1);
