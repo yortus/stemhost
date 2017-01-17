@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {info} from './util';
+import {info} from '../util';
 import StemMain from './stem-main';
 import {StemInfoWithDeps} from './stem-info';
 

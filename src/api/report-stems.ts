@@ -1,4 +1,4 @@
-import {info} from './util';
+import {info} from '../util';
 import {StemInfoWithDeps} from './stem-info';
 
 
