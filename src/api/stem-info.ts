@@ -4,7 +4,7 @@ export default StemInfo;
 
 
 
-/** TODO: doc */
+/** Holds metadata about a STEM. */
 interface StemInfo {
 
     /** The name of the STEM. */
@@ -32,7 +32,7 @@ interface StemInfo {
 
 
 
-// TODO: doc...
+/** Holds metadata about a STEM, including its direct relationships with other STEMs. */
 export interface StemInfoWithDeps extends StemInfo {
 
     /** The names of all STEMs on which this STEM has declared direct dependencies. */

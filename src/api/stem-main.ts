@@ -32,11 +32,5 @@ interface StemMain {
 
     // TODO: ===== FOR BUILDING =====
 
-    // TODO: doc... path is relative to this file (or STEM root dir?) (or absolute?)
-    srcFilesGlob?: string;
-
-    // TODO: doc... path is relative to this file (or STEM root dir?) (or absolute?)
-    distFilesGlob?: string;
-
 
 }
