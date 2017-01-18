@@ -1,0 +1,19 @@
+{
+    "name": "testapp",
+    "version": "0.0.1",
+    "scripts": {
+        "start": "stem start",
+        "build": "stem build",
+        "build-aaa-1": "ncp stem_sources/aaa-1 node_modules/aaa-1 && tsc -p node_modules/aaa-1/src",
+        "build-aaa-2": "ncp stem_sources/aaa-2 node_modules/aaa-2",
+        "build-aaa-3": "ncp stem_sources/aaa-3 node_modules/aaa-3"
+    },
+    "dependencies": {
+        "stem-host": "0.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^6.0.37",
+        "ncp": "2.x",
+        "typescript": "^2.2.0-dev.20170110"
+    }
+}
