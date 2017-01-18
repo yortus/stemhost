@@ -1,6 +1,6 @@
 {
   "name": "stem-host",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "STEM host",
   "readmeFilename": "README.md",
   "main": "dist/index.js",
