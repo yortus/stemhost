@@ -25,12 +25,4 @@ interface StemMain {
 
     // TODO: doc...
     decorateExports?: (exports: any, importer: {name: string}) => any;
-
-
-
-
-
-    // TODO: ===== FOR BUILDING =====
-
-
 }
