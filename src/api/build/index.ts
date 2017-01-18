@@ -55,6 +55,7 @@ export default async function build() {
         // npm run build in STEM source dir
         info(`Building ${stem.name}....`);
         await runCommand(`npm run build-${stem.name}`);
+        rebuiltStemNames.push(stem.name);
     }
 
     // TODO: ...
