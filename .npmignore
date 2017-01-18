@@ -2,6 +2,7 @@
 scripts/
 src/
 test/
+examples/
 *.ts
 !*.d.ts
 *.js.map
