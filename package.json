@@ -1,10 +1,10 @@
 {
   "name": "stem-host",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "STEM host",
   "readmeFilename": "README.md",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/api/index.js",
+  "typings": "dist/api/index.d.ts",
   "scripts": {
     "build": "tsc -p src && tsc -p test",
     "clean": "rimraf dist/ && rimraf test/**/*.js && rimraf test/**/*.js.map",
