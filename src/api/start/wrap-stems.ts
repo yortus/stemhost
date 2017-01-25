@@ -11,9 +11,12 @@ import StemInfo, {StemInfoWithDeps} from '../stem-info';
 export default function wrapStems(stems: StemInfoWithDeps[]) {
     stems.forEach(stem => {
 
-        let stemMain = require(path.join(stem.modulePath, 'stem')) as StemMain;
-        let decorateExports = stemMain.decorateExports;
-        if (!decorateExports) return;
+        // TODO: disable this check because it loads stems early/synchronously which may in turn
+        //       import other un-ready modules from the STEM or its deps. This is just an optimisation
+        //       anyway. It should have no ill effects to always create the decorators. 
+        // let stemMain = require(path.join(stem.modulePath, 'stem')) as StemMain;
+        // let decorateExports = stemMain.decorateExports;
+        // if (!decorateExports) return;
 
         stem.requiredBy.forEach(reqdBy => {
             let importer = stems.find(stem => stem.name === reqdBy)!;
