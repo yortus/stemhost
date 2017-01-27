@@ -11,13 +11,14 @@ import {StemInfoWithDeps} from '../stem-info';
 export default async function loadStems(stems: StemInfoWithDeps[]) {
 
     // TODO: ...
-    let stemMains = stems.map(stem => require(path.join(stem.modulePath, 'stem')) as StemMain);
+    let stemMainPaths = stems.map(stem => path.join(stem.modulePath, 'stem'));
     let importerLists = stems.map(stem => stem.requiredBy.map(name => stems.find(dep => dep.name === name)!));
 
     // Before start
     for (let i = 0; i < stems.length; ++i) {
         info(`  ${stems[i].name}: before start`);
-        let beforeStart = stemMains[i].beforeStart;
+        let stemMain = require(stemMainPaths[i]) as StemMain;
+        let beforeStart = stemMain.beforeStart;
         if (!beforeStart) continue;
         await beforeStart(importerLists[i]);
     }
@@ -25,7 +26,8 @@ export default async function loadStems(stems: StemInfoWithDeps[]) {
     // Start
     for (let i = 0; i < stems.length; ++i) {
         info(`  ${stems[i].name}: start`);
-        let start = stemMains[i].start;
+        let stemMain = require(stemMainPaths[i]) as StemMain;
+        let start = stemMain.start;
         if (!start) continue;
         await start(importerLists[i]);
     }
@@ -33,7 +35,8 @@ export default async function loadStems(stems: StemInfoWithDeps[]) {
     // After start
     for (let i = 0; i < stems.length; ++i) {
         info(`  ${stems[i].name}: after start`);
-        let afterStart = stemMains[i].afterStart;
+        let stemMain = require(stemMainPaths[i]) as StemMain;
+        let afterStart = stemMain.afterStart;
         if (!afterStart) continue;
         await afterStart(importerLists[i]);
     }
