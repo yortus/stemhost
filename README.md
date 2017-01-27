@@ -24,6 +24,7 @@
 - beforeStart
 - afterStart
 - decorateExports (advanced)
+- must NOT import module code when required (only inside the abovementioned functions)
 
 
 ## Inline STEMs / Building from stem_sources
